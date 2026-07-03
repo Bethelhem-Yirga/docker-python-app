@@ -1,0 +1,32 @@
+name: Build Docker Image (No Push)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Build Docker image (no push)
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          load: true  # Load the image into the runner's Docker daemon
+          tags: my-app:test
+      
+      - name: Run container and test
+        run: |
+          docker run -d -p 5000:5000 --name test-container my-app:test
+          sleep 5  # Wait for app to start
+          curl http://localhost:5000 | grep "Welcome"
+          docker stop test-container
+          docker rm test-container
