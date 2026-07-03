@@ -1,0 +1,23 @@
+version: '3.8'  # Docker Compose file format version
+
+services:
+  # This is the name of our service (container)
+  web:
+    # Where to find the Dockerfile
+    build: .
+    
+    # Port mapping (host:container)
+    ports:
+      - "5000:5000"
+    
+    # Volume mount (live code updates)
+    volumes:
+      - .:/app
+    
+    # Environment variables
+    environment:
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+    
+    # Container name (optional, but nice)
+    container_name: my-app-compose
