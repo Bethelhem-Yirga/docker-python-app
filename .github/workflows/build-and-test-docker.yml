@@ -1,0 +1,30 @@
+name: Build and Test Docker Image
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Build Docker image
+        run: |
+          docker build -t my-app:test .
+      
+      - name: Run unit tests inside container
+        run: |
+          docker run --rm my-app:test python -m pytest
+      
+      - name: Run linting inside container
+        run: |
+          docker run --rm my-app:test flake8 .
+      
+      - name: Check if app starts correctly
+        run: |
+          docker run -d -p 5000:5000 --name test-runner my-app:test
+          sleep 3
+          curl -f http://localhost:5000/health
+          docker stop test-runner
+          docker rm test-runner

@@ -1,5 +1,3 @@
-version: '3.8'  # Docker Compose file format version
-
 services:
   # This is the name of our service (container)
   web:
