@@ -1,0 +1,8 @@
+Key best practices for Docker images?
+Building secure, efficient, and maintainable Docker images is critical for production environments. Here are the key best practices discussed in the video (19:32 - 25:39):
+
+*   **Use Specific Image Tags:** Never use the `latest` tag in production. Instead, pin to **exact version tags** (e.g., `node:18.17-alpine`) to prevent unexpected updates or breaking changes from crashing your application.
+*   **Optimize Layer Efficiency:** Combine `RUN` commands using the `&&` operator. Each `RUN` directive creates a new layer in your image; chaining them reduces the overall image size and speeds up download times (21:19 - 21:51).
+*   **Implement Multi-Stage Builds:** Use multi-stage builds to separate your build environment from your runtime environment. This ensures your final image contains only the compiled code and essential dependencies, significantly reducing the attack surface and image size (22:02 - 23:04).
+*   **Avoid Root Privileges:** Never run containers as the `root` user. Always create a dedicated user within your `Dockerfile` and use the `USER` directive to switch to it. This provides a sandbox layer of security (23:04 - 23:51).
+*   **Regular Security Scanning:** Use tools like *Docker Scout* to scan your images against databases of known vulnerabilities. Vulnerabilities are discovered frequently, so automating these scans in your CI/CD pipeline is essential for maintaining a secure production environment (23:52 - 24:47).
