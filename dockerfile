@@ -13,6 +13,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # 5. Copy the rest of the application code
 COPY app.py .
 COPY test_app.py .
+COPY my-app/* .
 
 # 6. Tell Docker which port this container uses
 EXPOSE 5000
