@@ -1,10 +1,10 @@
 # test_app.py
-import app
+from app import app
 
 
 def test_hello():
     """Test that the hello route returns welcome message."""
-    response = app.app.test_client().get("/")
+    response = app.test_client().get("/")
     assert response.status_code == 200
     assert b"Welcome" in response.data
 
